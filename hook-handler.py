@@ -23,7 +23,7 @@ class SCMHandler(object):
         raise NotImplementedError
 
 
-class HgHanlder(SCMHandler):
+class HgHandler(SCMHandler):
 
     def pull(self):
         sh.hg.pull("-u")
@@ -31,7 +31,7 @@ class HgHanlder(SCMHandler):
     def checkout(self, branchname):
         sh.hg.up(branchname)
 
-class GitHanlder(SCMHandler):
+class GitHandler(SCMHandler):
 
     def pull(self):
         sh.git.pull()
@@ -41,8 +41,8 @@ class GitHanlder(SCMHandler):
 
 def scm_factory(scm_name, *args, **kwargs):
     d = {
-        "hg": HgHanlder,
-        "git": GitHanlder
+        "hg": HgHandler,
+        "git": GitHandler
     }
     try:
         creator = d[scm_name]
