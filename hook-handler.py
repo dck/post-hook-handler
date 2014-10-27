@@ -52,6 +52,23 @@ def scm_factory(scm_name, *args, **kwargs):
     return creator(*args, **kwargs)
 
 
+class RepoInfo(object):
+
+    def __init__(self, json_payload):
+        obj_payload = json.loads(json_payload)
+        self.commits = obj_payload["commits"]
+        self.repo_info = obj_payload["repository"]
+
+    def scm(self):
+        return self.repo_info["scm"]
+
+    def name(self):
+        return self.repo_info["name"]
+
+    def is_branch_changed(self, branchname):
+        res = any(c["branch"] == branchname for c in self.commits)
+        return res
+
 
 # {
 #     "canon_url": "https://bitbucket.org",
